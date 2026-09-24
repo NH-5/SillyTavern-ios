@@ -210,6 +210,12 @@ if (!cliArgs.disableCsrf) {
 }
 
 // Static files
+if (process.env.SILLYTAVERN_IOS === '1') {
+    app.get('/api/ios/health', (_, response) => {
+        response.json({ app: 'SillyTavern', platform: 'ios' });
+    });
+}
+
 // Host index page
 app.get('/', cacheBuster.middleware, (request, response) => {
     if (shouldRedirectToLogin(request)) {

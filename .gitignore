@@ -1,4 +1,8 @@
 node_modules/
+/ios/Bundle/
+/ios/Vendor/
+/ios/*.xcodeproj/xcuserdata/
+/ios/*.xcodeproj/project.xcworkspace/xcuserdata/
 public/chats/
 public/characters/
 public/User Avatars/

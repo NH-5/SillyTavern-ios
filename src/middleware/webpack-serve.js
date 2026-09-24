@@ -1,8 +1,12 @@
 import path from 'node:path';
+import fs from 'node:fs';
 import webpack from 'webpack';
 import getPublicLibConfig from '../../webpack.config.js';
+import { serverDirectory } from '../server-directory.js';
 
 export default function getWebpackServeMiddleware() {
+    const iosBundlePath = path.join(serverDirectory, 'public', 'lib.ios.js');
+    const isIOSBundle = process.env.SILLYTAVERN_IOS === '1';
     /**
      * A very spartan recreation of webpack-dev-middleware.
      * @param {import('express').Request} req Request object.
@@ -11,6 +15,13 @@ export default function getWebpackServeMiddleware() {
      * @type {import('express').RequestHandler}
      */
     function devMiddleware(req, res, next) {
+        if (isIOSBundle) {
+            if (req.method === 'GET' && req.path === '/lib.js') {
+                return res.sendFile(iosBundlePath);
+            }
+            return next();
+        }
+
         const publicLibConfig = getPublicLibConfig();
         const outputPath = publicLibConfig.output?.path;
         const outputFile = publicLibConfig.output?.filename;
@@ -31,6 +42,13 @@ export default function getWebpackServeMiddleware() {
      * @returns {Promise<void>}
      */
     devMiddleware.runWebpackCompiler = ({ forceDist = false, pruneCache = false } = {}) => {
+        if (isIOSBundle) {
+            if (!fs.existsSync(iosBundlePath)) {
+                return Promise.reject(new Error(`iOS frontend bundle is missing: ${iosBundlePath}`));
+            }
+            return Promise.resolve();
+        }
+
         console.log();
         console.log('Compiling frontend libraries...');
 
