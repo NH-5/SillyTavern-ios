@@ -16,7 +16,7 @@ bash ios/prepare-bundle.sh
 open ios/SillyTavern.xcodeproj
 ```
 
-In Xcode, select the **SillyTavern** target, set your signing team and a unique bundle identifier, select your iPhone, then Run. Re-run `ios/prepare-bundle.sh` after changing server or web files. `ios/setup-runtime.sh` downloads the pinned [NodeMobile 24.21.0-0 release](https://github.com/fogtape/nodejs-mobile/releases/tag/v24.21.0-0) and verifies its SHA-256 digest. The generated `ios/Vendor` and `ios/Bundle` directories are ignored by Git.
+In Xcode, select the **SillyTavern** target, set your signing team and a unique bundle identifier, select your iPhone, then Run. To keep personal signing changes out of Git, put `DEVELOPMENT_TEAM = YOUR_TEAM_ID` and `PRODUCT_BUNDLE_IDENTIFIER = com.yourname.sillytavern.local` on separate lines in `ios/SillyTavern/Signing.local.xcconfig`; this optional file is ignored by Git and overrides the shared defaults. Reopen the project or rebuild after editing it. Re-run `ios/prepare-bundle.sh` after changing server or web files. `ios/setup-runtime.sh` downloads the pinned [NodeMobile 24.21.0-0 release](https://github.com/fogtape/nodejs-mobile/releases/tag/v24.21.0-0) and verifies its SHA-256 digest. The generated `ios/Vendor` and `ios/Bundle` directories are ignored by Git.
 
 The app listens only on `127.0.0.1`. Its config and user data live in `Library/Application Support/SillyTavern` in the app container. The web bundle is prepared at build time so the phone does not have to run Webpack. `prepare-bundle.sh` copies only files tracked by Git, so local chats and secrets under `public/` do not enter the app package.
 

@@ -1,0 +1,4 @@
+// Shared signing defaults. Put your own team and bundle ID in the ignored
+// Signing.local.xcconfig file so Xcode does not dirty the public project.
+PRODUCT_BUNDLE_IDENTIFIER = com.example.SillyTavernLocal
+#include? "Signing.local.xcconfig"

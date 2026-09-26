@@ -3,6 +3,7 @@ node_modules/
 /ios/Vendor/
 /ios/*.xcodeproj/xcuserdata/
 /ios/*.xcodeproj/project.xcworkspace/xcuserdata/
+/ios/SillyTavern/Signing.local.xcconfig
 public/chats/
 public/characters/
 public/User Avatars/

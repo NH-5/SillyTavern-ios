@@ -35,6 +35,15 @@ open ios/SillyTavern.xcodeproj
 3. 勾选 **Automatically manage signing**，在 **Team** 选择自己的团队或 *Personal Team*。
 4. 将占位的 `com.example.SillyTavernLocal` 改为自己的唯一 **Bundle Identifier**，例如 `com.yourname.sillytavern.local`。如果 Xcode 显示标识符已被占用，换一个名称。
 
+为了避免个人签名设置使 Git 工作区出现未提交更改，可以在仓库根目录新建 `ios/SillyTavern/Signing.local.xcconfig`：
+
+```text
+DEVELOPMENT_TEAM = 你的 Apple Team ID
+PRODUCT_BUNDLE_IDENTIFIER = com.yourname.sillytavern.local
+```
+
+这个文件已被 Git 忽略。填入后重新打开 Xcode 项目或重新构建，检查 **Signing & Capabilities** 显示的 Team 和 Bundle Identifier。Team ID 可在 Xcode 的 Apple 账户设置中查看；若先通过 Xcode 界面选择 Team，也可以把该值复制进本地文件，并撤销 Xcode 对 `project.pbxproj` 的相应改动。不要将个人 Team ID 提交到仓库。
+
 自动签名会由 Xcode 管理开发证书、设备注册和描述文件。[Apple：在实体设备上运行 App](https://developer.apple.com/documentation/xcode/running-your-app-on-simulated-or-physical-devices)
 
 ## 4. 构建并安装
